@@ -30,6 +30,7 @@ body {
     width: 100%;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 1rem 0;
     border-bottom: 1px solid rgba(0, 255, 136, 0.1);
@@ -366,7 +367,6 @@ body {
     border-radius: 10px;
     padding: 2rem;
     transition: var(--transition);
-    cursor: pointer;
 }
 
 .blog-card:hover {
@@ -391,6 +391,30 @@ body {
     color: var(--gray);
     line-height: 1.6;
     margin-bottom: 1rem;
+}
+
+.blog-content {
+    color: var(--gray);
+    line-height: 1.8;
+    margin: 1rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.blog-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.blog-tag {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--primary-green);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(0, 255, 136, 0.2);
 }
 
 .read-more {
