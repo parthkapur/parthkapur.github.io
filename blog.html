@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Your Name</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Blog - Parth Kapur</title>
+    <link rel="stylesheet" href="./styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,12 +12,12 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">YN</a>
+            <a href="./index.html" class="nav-logo">PK</a>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="resume.html" class="nav-link">Resume</a></li>
-                <li><a href="blog.html" class="nav-link active">Blog</a></li>
-                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="./index.html" class="nav-link">Home</a></li>
+                <li><a href="./resume.html" class="nav-link">Resume</a></li>
+                <li><a href="./blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="./index.html#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -29,75 +29,61 @@
 
     <section class="blog-hero">
         <div class="container">
-            <h1>Blog</h1>
-            <p class="tagline">Thoughts, tutorials, and insights from my journey</p>
+            <h1>Blog & Projects</h1>
+            <p class="tagline">My latest work, research, and thoughts on AI</p>
         </div>
     </section>
 
     <div class="blog-grid" id="blogGrid">
-        <!-- Blog posts will be dynamically loaded here -->
-        
-        <!-- Example blog post structure -->
-        <article class="blog-card">
-            <div class="blog-date">December 15, 2024</div>
-            <h2 class="blog-title">Building Scalable Microservices with Node.js</h2>
-            <p class="blog-excerpt">
-                Exploring best practices for creating robust microservices architecture using Node.js, Docker, and Kubernetes. Learn how to design services that can handle millions of requests...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
-
-        <article class="blog-card">
-            <div class="blog-date">November 28, 2024</div>
-            <h2 class="blog-title">The Future of Web Development: AI Integration</h2>
-            <p class="blog-excerpt">
-                How artificial intelligence is reshaping the way we build web applications. From code generation to automated testing, discover the tools that are changing the game...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
-
-        <article class="blog-card">
-            <div class="blog-date">November 10, 2024</div>
-            <h2 class="blog-title">Optimizing React Performance: A Deep Dive</h2>
-            <p class="blog-excerpt">
-                Learn advanced techniques for optimizing React applications, including code splitting, lazy loading, and proper use of React.memo and useMemo hooks...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
-
-        <article class="blog-card">
-            <div class="blog-date">October 22, 2024</div>
-            <h2 class="blog-title">DevOps Best Practices: CI/CD Pipeline Setup</h2>
-            <p class="blog-excerpt">
-                Step-by-step guide to setting up a robust CI/CD pipeline using GitHub Actions, Docker, and AWS. Automate your deployment process and ship code faster...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
-
-        <article class="blog-card">
-            <div class="blog-date">October 5, 2024</div>
-            <h2 class="blog-title">Understanding TypeScript Generics</h2>
-            <p class="blog-excerpt">
-                Master TypeScript generics with practical examples. Learn how to write reusable, type-safe code that scales with your application...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
-
-        <article class="blog-card">
-            <div class="blog-date">September 18, 2024</div>
-            <h2 class="blog-title">Building Real-time Applications with WebSockets</h2>
-            <p class="blog-excerpt">
-                Implement real-time features in your web applications using WebSockets and Socket.io. From chat applications to live dashboards...
-            </p>
-            <a href="#" class="read-more">Read more →</a>
-        </article>
+        <!-- Blog posts will be loaded from JSON -->
     </div>
 
     <footer class="footer">
-        <p>&copy; 2024 Your Name. Built with ♥ and hosted on GitHub Pages.</p>
+        <p>&copy; 2024 Parth Kapur. Built with ♥ and hosted on GitHub Pages.</p>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="blog.js"></script>
+    <script src="./script.js"></script>
+    <script>
+        // Simple blog loading from JSON
+        fetch('./blog-posts.json')
+            .then(response => response.json())
+            .then(data => {
+                const blogGrid = document.getElementById('blogGrid');
+                
+                // Sort posts by date (newest first)
+                data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Render each post
+                data.posts.forEach(post => {
+                    const postCard = document.createElement('article');
+                    postCard.className = 'blog-card';
+                    
+                    const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    
+                    postCard.innerHTML = `
+                        <div class="blog-date">${formattedDate}</div>
+                        <h2 class="blog-title">${post.title}</h2>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        ${post.content ? `<div class="blog-content">${post.content}</div>` : ''}
+                        ${post.link ? `<a href="${post.link}" target="_blank" class="read-more">View Project →</a>` : ''}
+                        ${post.tags ? `
+                            <div class="blog-tags">
+                                ${post.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    `;
+                    
+                    blogGrid.appendChild(postCard);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading blog posts:', error);
+                document.getElementById('blogGrid').innerHTML = '<p>Error loading blog posts. Please try again later.</p>';
+            });
+    </script>
 </body>
 </html>
